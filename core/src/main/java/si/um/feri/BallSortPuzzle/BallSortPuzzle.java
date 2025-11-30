@@ -1,32 +1,44 @@
 package si.um.feri.BallSortPuzzle;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-/** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
+import si.um.feri.BallSortPuzzle.assets.AssetDescriptors;
+import si.um.feri.BallSortPuzzle.assets.RegionNames;
+
 public class BallSortPuzzle extends ApplicationAdapter {
     private SpriteBatch batch;
-    private Texture image;
+    private AssetManager assetManager;
+    private TextureRegion ballRegion;
 
     @Override
     public void create() {
-        batch = new SpriteBatch();
-        image = new Texture("libgdx.png");
+        assetManager = new AssetManager();
+
+        assetManager.load(AssetDescriptors.UI_ATLAS);
+        assetManager.load(AssetDescriptors.FONT);
+        assetManager.load(AssetDescriptors.CONFETTI_LEFT);
+        assetManager.load(AssetDescriptors.CONFETTI_RIGHT);
+        assetManager.load(AssetDescriptors.POP_SOUND);
+        assetManager.load(AssetDescriptors.PICK_SOUND);
+        assetManager.load(AssetDescriptors.MUSIC);
+
+        assetManager.finishLoading();
     }
 
     @Override
     public void render() {
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
-        batch.begin();
-        batch.draw(image, 140, 210);
-        batch.end();
     }
 
     @Override
     public void dispose() {
         batch.dispose();
-        image.dispose();
+        assetManager.dispose();
     }
 }

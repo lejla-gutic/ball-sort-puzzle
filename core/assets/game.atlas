@@ -1,0 +1,118 @@
+
+game.png
+size: 4096, 2048
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+background
+  rotate: false
+  xy: 1028, 1016
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: -1
+blue_ball
+  rotate: false
+  xy: 2, 2
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: -1
+green_ball
+  rotate: false
+  xy: 1028, 514
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: -1
+orange_ball
+  rotate: false
+  xy: 2054, 1540
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: -1
+peach_ball
+  rotate: false
+  xy: 504, 2
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: -1
+pink_ball
+  rotate: false
+  xy: 1530, 514
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: -1
+purple_ball
+  rotate: false
+  xy: 2054, 1038
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: -1
+red_ball
+  rotate: false
+  xy: 2556, 1540
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: -1
+reset_button
+  rotate: false
+  xy: 2556, 1038
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: -1
+settings_button
+  rotate: false
+  xy: 3058, 1540
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: -1
+soundOn_button
+  rotate: false
+  xy: 3058, 1038
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: -1
+sounfOff_button
+  rotate: false
+  xy: 3560, 1540
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: -1
+tube
+  rotate: false
+  xy: 2, 504
+  size: 1024, 1536
+  orig: 1024, 1536
+  offset: 0, 0
+  index: -1
+turquoise_ball
+  rotate: false
+  xy: 3560, 1038
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: -1
+undo_button
+  rotate: false
+  xy: 1006, 2
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: -1
+yellow_ball
+  rotate: false
+  xy: 1508, 12
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: -1

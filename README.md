@@ -49,7 +49,7 @@ A level is solved when:
 
 ## 🧩 4. Game Elements
 
-### 🧪Tubes
+### 🧪 Tubes
 - Transparent vertical containers.
 - Each has a fixed capacity (e.g., 4 balls).
 - May start empty or partially filled depending on the level.
