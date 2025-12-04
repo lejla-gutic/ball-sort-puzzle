@@ -5,11 +5,15 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class AssetDescriptors {
 
     public static final AssetDescriptor<TextureAtlas> UI_ATLAS =
         new AssetDescriptor<>(AssetPaths.UI_ATLAS, TextureAtlas.class);
+
+    public static final AssetDescriptor<Skin> ORANGE_SKIN =
+        new AssetDescriptor<>("skin/uiskin.json", Skin.class);
 
     public static final AssetDescriptor<BitmapFont> FONT =
         new AssetDescriptor<>(AssetPaths.FONT, BitmapFont.class);
@@ -28,6 +32,7 @@ public class AssetDescriptors {
 
     public static final AssetDescriptor<Sound> MUSIC =
         new AssetDescriptor<>(AssetPaths.MUSIC, Sound.class);
+
 
     private AssetDescriptors() {
     }

@@ -1,89 +1,117 @@
 
 game.png
-size: 4096, 2048
+size: 8192, 2048
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
 background
   rotate: false
-  xy: 1028, 1016
+  xy: 2308, 1016
   size: 1024, 1024
   orig: 1024, 1024
   offset: 0, 0
   index: -1
-blue_ball
+ball_pile
+  rotate: false
+  xy: 1028, 690
+  size: 1278, 326
+  orig: 1278, 326
+  offset: 0, 0
+  index: -1
+bear
   rotate: false
   xy: 2, 2
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
   index: -1
+blue_ball
+  rotate: false
+  xy: 3334, 1540
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: -1
 green_ball
-  rotate: false
-  xy: 1028, 514
-  size: 500, 500
-  orig: 500, 500
-  offset: 0, 0
-  index: -1
-orange_ball
-  rotate: false
-  xy: 2054, 1540
-  size: 500, 500
-  orig: 500, 500
-  offset: 0, 0
-  index: -1
-peach_ball
   rotate: false
   xy: 504, 2
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
   index: -1
+intro_background
+  rotate: false
+  xy: 1028, 1018
+  size: 1278, 1022
+  orig: 1278, 1022
+  offset: 0, 0
+  index: -1
+logo
+  rotate: false
+  xy: 2308, 693
+  size: 405, 321
+  orig: 405, 321
+  offset: 0, 0
+  index: -1
+orange_ball
+  rotate: false
+  xy: 3334, 1038
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: -1
+peach_ball
+  rotate: false
+  xy: 3836, 1540
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: -1
 pink_ball
   rotate: false
-  xy: 1530, 514
+  xy: 3836, 1038
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
   index: -1
 purple_ball
   rotate: false
-  xy: 2054, 1038
+  xy: 4338, 1540
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
   index: -1
 red_ball
   rotate: false
-  xy: 2556, 1540
+  xy: 4338, 1038
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
   index: -1
 reset_button
   rotate: false
-  xy: 2556, 1038
+  xy: 4840, 1540
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
   index: -1
 settings_button
   rotate: false
-  xy: 3058, 1540
+  xy: 4840, 1038
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
   index: -1
 soundOn_button
   rotate: false
-  xy: 3058, 1038
+  xy: 5342, 1540
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
   index: -1
 sounfOff_button
   rotate: false
-  xy: 3560, 1540
+  xy: 5342, 1038
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
@@ -97,21 +125,21 @@ tube
   index: -1
 turquoise_ball
   rotate: false
-  xy: 3560, 1038
+  xy: 5844, 1540
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
   index: -1
 undo_button
   rotate: false
-  xy: 1006, 2
+  xy: 5844, 1038
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
   index: -1
 yellow_ball
   rotate: false
-  xy: 1508, 12
+  xy: 6346, 1540
   size: 500, 500
   orig: 500, 500
   offset: 0, 0

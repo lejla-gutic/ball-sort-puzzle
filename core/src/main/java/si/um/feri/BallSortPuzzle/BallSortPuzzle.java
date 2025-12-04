@@ -1,23 +1,23 @@
 package si.um.feri.BallSortPuzzle;
 
-import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import si.um.feri.BallSortPuzzle.assets.AssetDescriptors;
-import si.um.feri.BallSortPuzzle.assets.RegionNames;
+import si.um.feri.BallSortPuzzle.screens.IntroScreen;
 
-public class BallSortPuzzle extends ApplicationAdapter {
+public class BallSortPuzzle extends Game {
     private SpriteBatch batch;
     private AssetManager assetManager;
     private TextureRegion ballRegion;
 
     @Override
     public void create() {
+        batch = new SpriteBatch();
+
         assetManager = new AssetManager();
 
         assetManager.load(AssetDescriptors.UI_ATLAS);
@@ -27,13 +27,15 @@ public class BallSortPuzzle extends ApplicationAdapter {
         assetManager.load(AssetDescriptors.POP_SOUND);
         assetManager.load(AssetDescriptors.PICK_SOUND);
         assetManager.load(AssetDescriptors.MUSIC);
+        assetManager.load(AssetDescriptors.ORANGE_SKIN);
 
         assetManager.finishLoading();
+        setScreen(new IntroScreen(this));
     }
 
     @Override
     public void render() {
-        ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
+        super.render();
     }
 
     @Override
@@ -41,4 +43,13 @@ public class BallSortPuzzle extends ApplicationAdapter {
         batch.dispose();
         assetManager.dispose();
     }
+
+    public AssetManager getAssetManager() {
+        return assetManager;
+    }
+
+    public SpriteBatch getBatch() {
+        return batch;
+    }
+
 }
