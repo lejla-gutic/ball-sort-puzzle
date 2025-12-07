@@ -46,7 +46,7 @@ public class MenuScreen extends ScreenAdapter {
         uiSkin = assetManager.get(AssetDescriptors.ORANGE_SKIN);
         atlas = assetManager.get(AssetDescriptors.UI_ATLAS);
 
-        backgroundRegion = atlas.findRegion("background");
+        backgroundRegion = atlas.findRegion("menu_background");
 
         stage.addActor(buildUI());
 
@@ -81,9 +81,12 @@ public class MenuScreen extends ScreenAdapter {
         Table root = new Table();
         root.setFillParent(true);
 
-        TextButton playBtn = new TextButton("PLAY", uiSkin);
-        TextButton leaderboardBtn = new TextButton("LEADERBOARD", uiSkin);
-        TextButton quitBtn = new TextButton("QUIT", uiSkin);
+        TextButton playBtn = new TextButton("PLAY", uiSkin, "menu-blue");
+        TextButton leaderboardBtn = new TextButton("LEADERBOARD", uiSkin, "menu-blue");
+        TextButton quitBtn = new TextButton("QUIT", uiSkin, "menu-blue");
+        playBtn.getLabel().setFontScale(1.4f);
+        leaderboardBtn.getLabel().setFontScale(1.4f);
+        quitBtn.getLabel().setFontScale(1.4f);
 
         playBtn.addListener(new ClickListener() {
             @Override
@@ -107,7 +110,7 @@ public class MenuScreen extends ScreenAdapter {
         });
 
         Table buttonTable = new Table();
-        buttonTable.defaults().pad(20).fillX().width(500);
+        buttonTable.defaults().pad(20).fillX().width(500).height(50); ;
 
         buttonTable.add(playBtn).row();
         buttonTable.add(leaderboardBtn).row();

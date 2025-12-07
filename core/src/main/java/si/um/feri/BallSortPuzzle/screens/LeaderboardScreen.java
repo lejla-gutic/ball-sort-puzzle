@@ -31,8 +31,8 @@ public class LeaderboardScreen extends ScreenAdapter {
 
     private Skin skin;
     private TextureAtlas atlas;
-    private TextureRegion background;
     private BitmapFont titleFont;
+    private TextureRegion backgroundRegion;
 
     public LeaderboardScreen(BallSortPuzzle game) {
         this.game = game;
@@ -51,21 +51,23 @@ public class LeaderboardScreen extends ScreenAdapter {
         atlas = am.get(AssetDescriptors.UI_ATLAS);
         titleFont = am.get(AssetDescriptors.FONT);
 
-        background = atlas.findRegion("background");
+        backgroundRegion = atlas.findRegion("menu_background");
 
-        stage.addActor(buildUI());
+        Table root = buildUI();
+        stage.addActor(root);
 
+        // Fade-in animation
         stage.getRoot().getColor().a = 0f;
-        stage.getRoot().addAction(Actions.fadeIn(0.7f));
+        stage.getRoot().addAction(Actions.fadeIn(0.6f));
     }
 
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(0, 0, 0, 1);
+        ScreenUtils.clear(0,0,0,1);
 
         game.getBatch().begin();
         game.getBatch().draw(
-            background,
+            backgroundRegion,
             0, 0,
             Gdx.graphics.getWidth(),
             Gdx.graphics.getHeight()
@@ -80,53 +82,100 @@ public class LeaderboardScreen extends ScreenAdapter {
 
         Table root = new Table();
         root.setFillParent(true);
+        root.top().padTop(70);
 
+        // BACK button
         TextButton backBtn = new TextButton(" BACK", skin);
         backBtn.addListener(e -> {
             game.setScreen(new MenuScreen(game));
             return true;
         });
 
-        // Put icon + text together
-        Table backTable = new Table();
-        backTable.add(backBtn);
+        root.add(backBtn).left().padLeft(40);
+        root.row().padTop(40);
+
+        // TITLE + medals
+        Table titleRow = new Table();
+
+        Image medalLeft = new Image(atlas.findRegion("medal"));
+        Image medalRight = new Image(atlas.findRegion("medal"));
 
         Label.LabelStyle titleStyle = new Label.LabelStyle(titleFont, Color.WHITE);
-        Label title = new Label("Leaderboard", titleStyle);
+        Label title = new Label("LEADERBOARD", titleStyle);
         title.setFontScale(2f);
 
-        Table scoreTable = new Table(skin);
-        scoreTable.defaults().pad(10).padLeft(30).padRight(30);
+        titleRow.add(medalLeft).size(60,60).padRight(20);
+        titleRow.add(title);
+        titleRow.add(medalRight).size(60,60).padLeft(20);
 
-        // Example hard-coded results
-        addRow(scoreTable, "Lejla", "1200");
-        addRow(scoreTable, "Nejra", "850");
-        addRow(scoreTable, "Emina", "780");
-        addRow(scoreTable, "Ajla", "600");
+        root.add(titleRow).center();
+        root.row().padTop(40);
 
-        root.top().padTop(100);
+        // TABLE for scores
+        Table scoreTable = new Table();
+        scoreTable.defaults().pad(8);
 
-        root.add(backTable).left().padLeft(40);
-        root.row().padTop(80);
+        addRow(scoreTable, 1, "Lejla", 5000);
+        addRow(scoreTable, 2, "Nejra", 4200);
+        addRow(scoreTable, 3, "Ajla", 3900);
+        addRow(scoreTable, 4, "Ivana", 3600);
 
-        root.add(title).center();
-        root.row().padTop(60);
-
-        root.add(scoreTable).center();
-        root.row();
+        root.add(scoreTable).width(750);
 
         return root;
     }
 
-    private void addRow(Table table, String name, String score) {
-        Label nameLabel = new Label(name, skin);
-        Label scoreLabel = new Label(score, skin);
+    private void addRow(Table table, int rank, String name, int score) {
 
-        nameLabel.setFontScale(1.4f);
-        scoreLabel.setFontScale(1.4f);
+        // Outer container for borders
+        Table container = new Table();
 
-        table.add(nameLabel).expandX().left();
-        table.add(scoreLabel).right();
-        table.row();
+        // Bottom dark shadow
+        Image bottomBorder = new Image(skin.newDrawable("blue-card-dark"));
+        bottomBorder.setHeight(4);
+
+        // Main card
+        Table row = new Table();
+        row.setBackground(skin.newDrawable("blue-card"));  // main purple card
+
+        // Rank label
+        Label rankLabel = new Label(String.valueOf(rank), skin.get("white", Label.LabelStyle.class));
+        rankLabel.setFontScale(1.3f);
+
+        // User icon
+        Image userIcon = new Image(atlas.findRegion("user"));
+
+        // Player name
+        Label nameLabel = new Label(name, skin.get("white", Label.LabelStyle.class));
+        nameLabel.setFontScale(1.3f);
+
+        // Trophy icon
+        Image trophy = new Image(atlas.findRegion("trophy"));
+
+        // Score label
+        Label scoreLabel = new Label(String.format("%,d", score), skin.get("white", Label.LabelStyle.class));
+        scoreLabel.setFontScale(1.3f);
+
+        // Fill main card
+        row.add(rankLabel).padLeft(20).width(60).left();
+        row.add(userIcon).size(45,45).padRight(10);
+        row.add(nameLabel).expandX().left();
+        row.add(trophy).size(45,45).padRight(10);
+        row.add(scoreLabel).right().padRight(20);
+
+        // Add fade-in animation
+        row.addAction(Actions.sequence(
+            Actions.alpha(0),
+            Actions.fadeIn(0.4f)
+        ));
+
+        container.add(row).growX().height(70);
+        container.row();
+        container.add(bottomBorder).growX().height(4);
+        container.row();
+
+        table.add(container).width(750);
+        table.row().padBottom(8);
     }
+
 }

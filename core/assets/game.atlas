@@ -11,13 +11,6 @@ background
   orig: 1024, 1024
   offset: 0, 0
   index: -1
-ball_pile
-  rotate: false
-  xy: 1028, 690
-  size: 1278, 326
-  orig: 1278, 326
-  offset: 0, 0
-  index: -1
 bear
   rotate: false
   xy: 2, 2
@@ -27,14 +20,14 @@ bear
   index: -1
 blue_ball
   rotate: false
-  xy: 3334, 1540
+  xy: 1028, 516
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
   index: -1
 green_ball
   rotate: false
-  xy: 504, 2
+  xy: 3334, 1540
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
@@ -48,70 +41,98 @@ intro_background
   index: -1
 logo
   rotate: false
-  xy: 2308, 693
+  xy: 7350, 1719
   size: 405, 321
   orig: 405, 321
   offset: 0, 0
   index: -1
-orange_ball
+main_background
+  rotate: false
+  xy: 504, 2
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: -1
+medal
+  rotate: false
+  xy: 1530, 516
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: -1
+menu_background
   rotate: false
   xy: 3334, 1038
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
   index: -1
-peach_ball
+orange_ball
   rotate: false
   xy: 3836, 1540
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
   index: -1
-pink_ball
+peach_ball
   rotate: false
   xy: 3836, 1038
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
   index: -1
-purple_ball
+pink_ball
   rotate: false
   xy: 4338, 1540
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
   index: -1
-red_ball
+purple_ball
   rotate: false
   xy: 4338, 1038
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
   index: -1
-reset_button
+red_ball
   rotate: false
   xy: 4840, 1540
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
   index: -1
-settings_button
+reset_button
   rotate: false
   xy: 4840, 1038
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
   index: -1
-soundOn_button
+settings_button
   rotate: false
   xy: 5342, 1540
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
   index: -1
-sounfOff_button
+soundOn_button
   rotate: false
   xy: 5342, 1038
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: -1
+sounfOff_button
+  rotate: false
+  xy: 5844, 1540
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: -1
+trophy
+  rotate: false
+  xy: 5844, 1038
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
@@ -125,21 +146,28 @@ tube
   index: -1
 turquoise_ball
   rotate: false
-  xy: 5844, 1540
+  xy: 6346, 1540
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
   index: -1
 undo_button
   rotate: false
-  xy: 5844, 1038
+  xy: 6346, 1038
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: -1
+user
+  rotate: false
+  xy: 6848, 1540
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
   index: -1
 yellow_ball
   rotate: false
-  xy: 6346, 1540
+  xy: 6848, 1038
   size: 500, 500
   orig: 500, 500
   offset: 0, 0

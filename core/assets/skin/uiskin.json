@@ -15,6 +15,20 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 		name: white,
 		color: { a: 1, b: 0.2, g: 0.2, r: 0.2 }
 	}
+  blue-card: {
+    name: white,
+    color: { a: 0.8509804, b: 0.5372549, g: 0.20784314, r: 0.13725491 }
+  }
+  "blue-card-light": {
+    "name": "white",
+    "color": { "r": 0.12, "g": 0.16, "b": 0.38, "a": 0.95 }
+  },
+  "blue-card-dark": {
+    "name": "white",
+    "color": { "r": 0.04, "g": 0.05, "b": 0.12, "a": 0.95 }
+  }
+
+
 },
 com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
 	default: { background: progress-bar, knobBefore: progress-bar-before-knob },
@@ -29,6 +43,13 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		up: button-orange,
 		down: button-orange-down
 	},
+    "menu-blue": {
+      "font": "font",
+      "fontColor": { "r":1, "g":1, "b":1, "a":1 },
+      "downFontColor": { "r":0.9, "g":0.9, "b":1, "a":1 },
+      "up": "blue-card",
+      "down": "blue-card"
+    },
 	menu-item: {
 		font: font,
 		fontColor: { a: 1, b: 0.2627451, g: 0.05490196, r: 0.6 },
