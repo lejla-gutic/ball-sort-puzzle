@@ -1,0 +1,17 @@
+[
+{
+	"class": "si.um.feri.BallSortPuzzle.GameManager$ScoreEntry",
+	"name": "Lejla",
+	"score": 5000
+},
+{
+	"class": "si.um.feri.BallSortPuzzle.GameManager$ScoreEntry",
+	"name": "Hana",
+	"score": 1500
+},
+{
+	"class": "si.um.feri.BallSortPuzzle.GameManager$ScoreEntry",
+	"name": "Nejra",
+	"score": 3400
+}
+]

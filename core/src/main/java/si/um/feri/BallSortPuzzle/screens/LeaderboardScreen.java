@@ -1,5 +1,6 @@
 package si.um.feri.BallSortPuzzle.screens;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
@@ -20,7 +21,13 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import si.um.feri.BallSortPuzzle.BallSortPuzzle;
+import si.um.feri.BallSortPuzzle.GameManager;
 import si.um.feri.BallSortPuzzle.assets.AssetDescriptors;
+
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
+
 
 public class LeaderboardScreen extends ScreenAdapter {
 
@@ -94,7 +101,6 @@ public class LeaderboardScreen extends ScreenAdapter {
         root.add(backBtn).left().padLeft(40);
         root.row().padTop(40);
 
-        // TITLE + medals
         Table titleRow = new Table();
 
         Image medalLeft = new Image(atlas.findRegion("medal"));
@@ -111,14 +117,22 @@ public class LeaderboardScreen extends ScreenAdapter {
         root.add(titleRow).center();
         root.row().padTop(40);
 
-        // TABLE for scores
+
+        // score tables
         Table scoreTable = new Table();
         scoreTable.defaults().pad(8);
 
-        addRow(scoreTable, 1, "Lejla", 5000);
-        addRow(scoreTable, 2, "Nejra", 4200);
-        addRow(scoreTable, 3, "Ajla", 3900);
-        addRow(scoreTable, 4, "Ivana", 3600);
+        GameManager gm = new GameManager();
+
+        List<GameManager.ScoreEntry> entries = gm.getScores();
+
+        entries.sort((a, b) ->Integer.compare(b.score, a.score));
+
+        int rank = 1;
+        for (GameManager.ScoreEntry e : entries) {
+            addRow(scoreTable, rank, e.name, e.score);
+            rank++;
+        }
 
         root.add(scoreTable).width(750);
 
@@ -127,43 +141,33 @@ public class LeaderboardScreen extends ScreenAdapter {
 
     private void addRow(Table table, int rank, String name, int score) {
 
-        // Outer container for borders
         Table container = new Table();
 
-        // Bottom dark shadow
         Image bottomBorder = new Image(skin.newDrawable("blue-card-dark"));
         bottomBorder.setHeight(4);
 
-        // Main card
         Table row = new Table();
         row.setBackground(skin.newDrawable("blue-card"));  // main purple card
 
-        // Rank label
         Label rankLabel = new Label(String.valueOf(rank), skin.get("white", Label.LabelStyle.class));
         rankLabel.setFontScale(1.3f);
 
-        // User icon
         Image userIcon = new Image(atlas.findRegion("user"));
 
-        // Player name
         Label nameLabel = new Label(name, skin.get("white", Label.LabelStyle.class));
         nameLabel.setFontScale(1.3f);
 
-        // Trophy icon
         Image trophy = new Image(atlas.findRegion("trophy"));
 
-        // Score label
         Label scoreLabel = new Label(String.format("%,d", score), skin.get("white", Label.LabelStyle.class));
         scoreLabel.setFontScale(1.3f);
 
-        // Fill main card
         row.add(rankLabel).padLeft(20).width(60).left();
         row.add(userIcon).size(45,45).padRight(10);
         row.add(nameLabel).expandX().left();
         row.add(trophy).size(45,45).padRight(10);
         row.add(scoreLabel).right().padRight(20);
 
-        // Add fade-in animation
         row.addAction(Actions.sequence(
             Actions.alpha(0),
             Actions.fadeIn(0.4f)

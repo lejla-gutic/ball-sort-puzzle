@@ -62,7 +62,6 @@ public class SettingsScreen extends ScreenAdapter {
         Table root = buildUI();
         stage.addActor(root);
 
-        // fade-in animacija
         stage.getRoot().getColor().a = 0f;
         stage.getRoot().addAction(Actions.fadeIn(0.6f));
     }
@@ -90,7 +89,6 @@ public class SettingsScreen extends ScreenAdapter {
         root.setFillParent(true);
         root.top().padTop(70);
 
-        //// BACK BUTTON
         TextButton backBtn = new TextButton(" BACK", skin);
         backBtn.addListener(e -> {
             game.setScreen(new MenuScreen(game));
@@ -100,33 +98,27 @@ public class SettingsScreen extends ScreenAdapter {
         root.add(backBtn).left().padLeft(40);
         root.row().padTop(40);
 
-        //// TITLE
         Label.LabelStyle titleStyle = new Label.LabelStyle(titleFont, Color.WHITE);
         Label title = new Label("SETTINGS", titleStyle);
         title.setFontScale(2f);
         root.add(title).center();
         root.row().padTop(50);
 
-        //// MAIN CONTENT TABLE
         Table settingsTable = new Table();
         settingsTable.defaults().pad(20);
 
-        // MUSIC toggle
         CheckBox musicToggle = new CheckBox(" Music", skin);
         musicToggle.setChecked(prefs.getBoolean("music_on", true));
         settingsTable.add(musicToggle).left().row();
 
-        // SOUND toggle
         CheckBox soundToggle = new CheckBox(" Sound", skin);
         soundToggle.setChecked(prefs.getBoolean("sound_on", true));
         settingsTable.add(soundToggle).left().row();
 
-        // UNDO toggle
         CheckBox undoToggle = new CheckBox(" Unlimited Undo", skin);
         undoToggle.setChecked(prefs.getBoolean("undo_unlimited", true));
         settingsTable.add(undoToggle).left().row();
 
-        // LEVEL ROW
         Label levelLabel = new Label("Start Level:", skin.get("white", Label.LabelStyle.class));
         levelLabel.setFontScale(1.2f);
 
@@ -135,7 +127,6 @@ public class SettingsScreen extends ScreenAdapter {
         TextButton mediumBtn = new TextButton("MEDIUM", skin);
         TextButton hardBtn = new TextButton("HARD", skin);
 
-        // highlight selected
         highlightLevelButton(prefs.getString("start_level", "Easy"), easyBtn, mediumBtn, hardBtn);
 
         easyBtn.addListener(new ChangeListener() {
