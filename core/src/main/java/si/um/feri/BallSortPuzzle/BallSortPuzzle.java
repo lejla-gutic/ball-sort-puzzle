@@ -26,7 +26,8 @@ public class BallSortPuzzle extends Game {
         assetManager.load(AssetDescriptors.CONFETTI_RIGHT);
         assetManager.load(AssetDescriptors.POP_SOUND);
         assetManager.load(AssetDescriptors.PICK_SOUND);
-        assetManager.load(AssetDescriptors.MUSIC);
+        assetManager.load(AssetDescriptors.GAME_MUSIC);
+        assetManager.load(AssetDescriptors.MENU_MUSIC);
         assetManager.load(AssetDescriptors.ORANGE_SKIN);
 
         assetManager.finishLoading();

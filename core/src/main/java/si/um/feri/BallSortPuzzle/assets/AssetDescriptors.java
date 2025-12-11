@@ -1,6 +1,7 @@
 package si.um.feri.BallSortPuzzle.assets;
 
 import com.badlogic.gdx.assets.AssetDescriptor;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
@@ -30,8 +31,11 @@ public class AssetDescriptors {
     public static final AssetDescriptor<Sound> PICK_SOUND =
         new AssetDescriptor<>(AssetPaths.PICK_SOUND, Sound.class);
 
-    public static final AssetDescriptor<Sound> MUSIC =
-        new AssetDescriptor<>(AssetPaths.MUSIC, Sound.class);
+    public static final AssetDescriptor<Music> GAME_MUSIC =
+        new AssetDescriptor<>(AssetPaths.GAME_MUSIC, Music.class);
+
+    public static final AssetDescriptor<Music> MENU_MUSIC =
+        new AssetDescriptor<>(AssetPaths.MENU_MUSIC, Music.class);
 
 
     private AssetDescriptors() {

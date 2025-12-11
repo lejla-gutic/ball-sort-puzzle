@@ -1,8 +1,10 @@
 package si.um.feri.BallSortPuzzle.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -29,8 +31,10 @@ public class MenuScreen extends ScreenAdapter {
 
     private Skin uiSkin;
     private TextureAtlas atlas;
-
     private TextureRegion backgroundRegion;
+    private Music menuMusic;
+    private Preferences prefs;
+
 
     public MenuScreen(BallSortPuzzle game) {
         this.game = game;
@@ -47,6 +51,20 @@ public class MenuScreen extends ScreenAdapter {
         atlas = assetManager.get(AssetDescriptors.UI_ATLAS);
 
         backgroundRegion = atlas.findRegion("menu_background");
+
+        prefs = Gdx.app.getPreferences("settings");
+
+        menuMusic = assetManager.get(AssetDescriptors.MENU_MUSIC);
+        menuMusic.setLooping(true);
+
+        boolean musicOn = prefs.getBoolean("music_on", true);
+
+        if (musicOn) {
+            menuMusic.play();
+        }
+        else {
+            menuMusic.pause();
+        }
 
         stage.addActor(buildUI());
 
@@ -69,11 +87,6 @@ public class MenuScreen extends ScreenAdapter {
 
         stage.act(delta);
         stage.draw();
-    }
-
-    @Override
-    public void dispose() {
-        stage.dispose();
     }
 
     private Table buildUI() {
@@ -130,4 +143,18 @@ public class MenuScreen extends ScreenAdapter {
 
         return root;
     }
+
+    @Override
+    public void hide() {
+        if (menuMusic != null) menuMusic.stop();
+    }
+
+    @Override
+    public void dispose() {
+        if (menuMusic != null) {
+            menuMusic.stop();
+        }
+        stage.dispose();
+    }
+
 }
