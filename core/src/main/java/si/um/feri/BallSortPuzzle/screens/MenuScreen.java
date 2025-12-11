@@ -83,9 +83,11 @@ public class MenuScreen extends ScreenAdapter {
 
         TextButton playBtn = new TextButton("PLAY", uiSkin, "menu-blue");
         TextButton leaderboardBtn = new TextButton("LEADERBOARD", uiSkin, "menu-blue");
+        TextButton settingsBtn = new TextButton("SETTINGS", uiSkin, "menu-blue");
         TextButton quitBtn = new TextButton("QUIT", uiSkin, "menu-blue");
         playBtn.getLabel().setFontScale(1.4f);
         leaderboardBtn.getLabel().setFontScale(1.4f);
+        settingsBtn.getLabel().setFontScale(1.4f);
         quitBtn.getLabel().setFontScale(1.4f);
 
         playBtn.addListener(new ClickListener() {
@@ -102,6 +104,13 @@ public class MenuScreen extends ScreenAdapter {
             }
         });
 
+        settingsBtn.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new SettingsScreen(game));
+            }
+        });
+
         quitBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -114,6 +123,7 @@ public class MenuScreen extends ScreenAdapter {
 
         buttonTable.add(playBtn).row();
         buttonTable.add(leaderboardBtn).row();
+        buttonTable.add(settingsBtn).row();
         buttonTable.add(quitBtn).row();
 
         root.add(buttonTable).center();
