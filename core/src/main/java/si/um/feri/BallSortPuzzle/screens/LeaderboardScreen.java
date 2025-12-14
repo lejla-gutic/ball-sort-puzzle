@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -15,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -91,15 +93,24 @@ public class LeaderboardScreen extends ScreenAdapter {
         root.setFillParent(true);
         root.top().padTop(70);
 
-        // BACK button
-        TextButton backBtn = new TextButton(" BACK", skin);
-        backBtn.addListener(e -> {
-            game.setScreen(new MenuScreen(game));
-            return true;
+        TextButton backBtn = new TextButton(" Back", skin);
+        backBtn.getLabel().setFontScale(1.1f);
+
+        Image backIcon = new Image(skin.getDrawable("image-left"));
+
+        Table backRow = new Table();
+        backRow.add(backIcon).size(24).padRight(8);
+        backRow.add(backBtn);
+
+        backBtn.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new MenuScreen(game));
+            }
         });
 
-        root.add(backBtn).left().padLeft(40);
-        root.row().padTop(40);
+        root.add(backRow).left().padLeft(1);
+        root.row().padTop(30);
 
         Table titleRow = new Table();
 

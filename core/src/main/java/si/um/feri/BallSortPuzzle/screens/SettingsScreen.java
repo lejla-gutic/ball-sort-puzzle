@@ -9,14 +9,18 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -37,6 +41,8 @@ public class SettingsScreen extends ScreenAdapter {
     private TextureRegion backgroundRegion;
 
     private Preferences prefs;
+
+    private static final Color MAROON = new Color(0.55f, 0.1f, 0.25f, 1f);
 
     public SettingsScreen(BallSortPuzzle game) {
         this.game = game;
@@ -89,40 +95,60 @@ public class SettingsScreen extends ScreenAdapter {
         root.setFillParent(true);
         root.top().padTop(70);
 
-        TextButton backBtn = new TextButton(" BACK", skin);
-        backBtn.addListener(e -> {
-            game.setScreen(new MenuScreen(game));
-            return true;
+        TextButton backBtn = new TextButton(" Back", skin);
+        backBtn.getLabel().setFontScale(1.1f);
+
+        Image backIcon = new Image(skin.getDrawable("image-left"));
+
+        Table backRow = new Table();
+        backRow.add(backIcon).size(24).padRight(8);
+        backRow.add(backBtn);
+
+        backBtn.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new MenuScreen(game));
+            }
         });
 
-        root.add(backBtn).left().padLeft(40);
-        root.row().padTop(40);
+        root.add(backRow).left().padLeft(1);
+        root.row().padTop(30);
 
-        Label.LabelStyle titleStyle = new Label.LabelStyle(titleFont, Color.WHITE);
-        Label title = new Label("SETTINGS", titleStyle);
-        title.setFontScale(2f);
-        root.add(title).center();
-        root.row().padTop(50);
 
-        Table settingsTable = new Table();
-        settingsTable.defaults().pad(20);
+        Table card = new Table();
+        card.setBackground(skin.getDrawable("panel-peach"));
+        card.pad(40);
+        card.defaults().growX().pad(18);
 
-        CheckBox musicToggle = new CheckBox(" Music", skin);
-        musicToggle.setChecked(prefs.getBoolean("music_on", true));
-        settingsTable.add(musicToggle).left().row();
+        Label title = new Label("SETTINGS", skin);
+        title.setFontScale(1.6f);
+        title.setAlignment(Align.center);
+        card.add(title).center().row();
 
-        CheckBox soundToggle = new CheckBox(" Sound", skin);
-        soundToggle.setChecked(prefs.getBoolean("sound_on", true));
-        settingsTable.add(soundToggle).left().row();
 
-        CheckBox undoToggle = new CheckBox(" Unlimited Undo", skin);
-        undoToggle.setChecked(prefs.getBoolean("undo_unlimited", true));
-        settingsTable.add(undoToggle).left().row();
+        CheckBox musicToggle = createSwitch("music_on", true);
+        CheckBox soundToggle = createSwitch("sound_on", true);
+        CheckBox undoToggle  = createSwitch("undo_unlimited", true);
 
-        Label levelLabel = new Label("Start Level:", skin.get("white", Label.LabelStyle.class));
+        Table settingsPanel = new Table();
+        settingsPanel.setBackground(skin.getDrawable("panel-maroon"));
+        settingsPanel.pad(25);
+        settingsPanel.defaults().growX().pad(12);
+
+        settingsPanel.add(createSettingRow("image-music-down", "Music", musicToggle)).row();
+        settingsPanel.add(createSettingRow("image-sound-down", "Sound", soundToggle)).row();
+        settingsPanel.add(createSettingRow("image-settings-down", "Unlimited Undo", undoToggle)).row();
+
+        card.add(settingsPanel).growX().row();
+
+
+        Label levelLabel = new Label("CHOOSE LEVEL", skin);
         levelLabel.setFontScale(1.2f);
+        levelLabel.setColor(MAROON);
+        card.add(levelLabel).padTop(25).left().row();
 
         Table levelRow = new Table();
+
         TextButton easyBtn = new TextButton("EASY", skin);
         TextButton mediumBtn = new TextButton("MEDIUM", skin);
         TextButton hardBtn = new TextButton("HARD", skin);
@@ -156,51 +182,67 @@ public class SettingsScreen extends ScreenAdapter {
             }
         });
 
-        levelRow.add(easyBtn).padRight(10);
-        levelRow.add(mediumBtn).padRight(10);
-        levelRow.add(hardBtn);
+        levelRow.add(easyBtn).pad(8);
+        levelRow.add(mediumBtn).pad(8);
+        levelRow.add(hardBtn).pad(8);
 
-        settingsTable.add(levelLabel).left().row();
-        settingsTable.add(levelRow).left().row();
+        card.add(levelRow).left().row();
 
-        // ===== SAVE PREFERENCES FOR TOGGLES =====
-        musicToggle.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                prefs.putBoolean("music_on", musicToggle.isChecked());
-                prefs.flush();
-            }
-        });
+        root.add(card).center().width(560);
 
-        soundToggle.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                prefs.putBoolean("sound_on", soundToggle.isChecked());
-                prefs.flush();
-            }
-        });
-
-        undoToggle.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                prefs.putBoolean("undo_unlimited", undoToggle.isChecked());
-                prefs.flush();
-            }
-        });
-
-        root.add(settingsTable).center();
+        card.setTransform(true);
+        card.setScale(0.95f);
+        card.addAction(Actions.scaleTo(1f, 1f, 0.25f));
 
         return root;
     }
 
     private void highlightLevelButton(String selected, TextButton easy, TextButton medium, TextButton hard) {
-        // reset boje
         easy.getLabel().setColor(Color.WHITE);
         medium.getLabel().setColor(Color.WHITE);
         hard.getLabel().setColor(Color.WHITE);
 
-        if (selected.equals("Easy")) easy.getLabel().setColor(Color.YELLOW);
-        if (selected.equals("Medium")) medium.getLabel().setColor(Color.YELLOW);
-        if (selected.equals("Hard")) hard.getLabel().setColor(Color.YELLOW);
+        if (selected.equals("Easy")) easy.getLabel().getColor().set(MAROON);
+        if (selected.equals("Medium")) medium.getLabel().getColor().set(MAROON);
+        if (selected.equals("Hard")) hard.getLabel().getColor().set(MAROON);
     }
+
+    private Table createSettingRow(String iconName, String text, CheckBox toggle) {
+        Table row = new Table();
+
+        Image icon = new Image(skin.getDrawable(iconName));
+        icon.setSize(28, 28);
+
+        Label label = new Label(text, skin);
+        label.setFontScale(1.1f);
+
+        row.add(icon).size(28).padRight(20);
+        row.add(label).expandX().left();
+        row.add(toggle).right();
+
+        return row;
+    }
+
+
+    private CheckBox createSwitch(String key, boolean def) {
+        CheckBox.CheckBoxStyle style = new CheckBox.CheckBoxStyle();
+        style.checkboxOn = skin.getDrawable("switch");
+        style.checkboxOff = skin.getDrawable("switch-off");
+        style.font = titleFont;
+        CheckBox toggle = new CheckBox("", style);
+        toggle.setChecked(prefs.getBoolean(key, def));
+
+        toggle.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                prefs.putBoolean(key, toggle.isChecked());
+                prefs.flush();
+            }
+        });
+
+        return toggle;
+    }
+
+
+
 }
