@@ -211,6 +211,7 @@ public class SettingsScreen extends ScreenAdapter {
         style.checkboxOn = skin.getDrawable("switch");
         style.checkboxOff = skin.getDrawable("switch-off");
         style.font = titleFont;
+
         CheckBox toggle = new CheckBox("", style);
         toggle.setChecked(prefs.getBoolean(key, def));
 

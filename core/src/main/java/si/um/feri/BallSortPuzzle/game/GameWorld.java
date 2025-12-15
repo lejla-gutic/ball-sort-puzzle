@@ -1,12 +1,12 @@
 package si.um.feri.BallSortPuzzle.game;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 public class GameWorld {
 
     private final List<Tube> tubes = new ArrayList<>();
-    private int selectedTube = -1;
     private int moves = 0;
 
     public GameWorld(LevelConfig config) {
@@ -17,25 +17,30 @@ public class GameWorld {
         List<Ball> balls = new ArrayList<>();
 
         for (int i = 0; i < config.colorCount; i++) {
+            BallColor color = BallColor.values()[i];
             for (int j = 0; j < config.capacity; j++) {
-                balls.add(new Ball(BallColor.values()[i]));
+                balls.add(new Ball(color));
             }
         }
 
-        java.util.Collections.shuffle(balls, new Random());
+        Collections.shuffle(balls);
 
         for (int i = 0; i < config.tubeCount; i++) {
             tubes.add(new Tube(config.capacity));
         }
 
-        int index = 0;
+        int tubeIndex = 0;
         for (Ball ball : balls) {
-            tubes.get(index % config.colorCount).addBall(ball);
-            index++;
+            while (tubeIndex < tubes.size() && tubes.get(tubeIndex).isFull()) {
+                tubeIndex++;
+            }
+            tubes.get(tubeIndex).addBallInitial(ball);
         }
     }
 
     public boolean move(int from, int to) {
+        if (from == to) return false;
+
         Tube source = tubes.get(from);
         Tube dest = tubes.get(to);
 
@@ -49,9 +54,10 @@ public class GameWorld {
         return true;
     }
 
-    public boolean isSolved(List<Tube> tubes1) {
-        return tubes1.stream().allMatch(Tube::isSolved);
+    public boolean isSolved() {
+        return tubes.stream().allMatch(Tube::isSolved);
     }
+
 
     public List<Tube> getTubes() {
         return tubes;

@@ -22,6 +22,13 @@ public class Tube {
         if (isEmpty()) return true;
         return peekTop().getColor() == ball.getColor();
     }
+    public void addBallInitial(Ball ball) {
+        if (balls.size() >= capacity) {
+            throw new IllegalStateException("Tube full during init");
+        }
+        balls.push(ball);
+    }
+
     public void addBall(Ball ball) {
         if(!canAdd(ball)) {
             throw new IllegalStateException("Invalid move");

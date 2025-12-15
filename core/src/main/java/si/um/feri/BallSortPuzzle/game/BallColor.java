@@ -6,5 +6,7 @@ public enum BallColor {
     GREEN,
     YELLOW,
     PURPLE,
-    ORANGE
+    ORANGE,
+    PINK,
+    TURQUOISE
 }
