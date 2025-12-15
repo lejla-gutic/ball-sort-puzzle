@@ -65,7 +65,6 @@ public class LeaderboardScreen extends ScreenAdapter {
         Table root = buildUI();
         stage.addActor(root);
 
-        // Fade-in animation
         stage.getRoot().getColor().a = 0f;
         stage.getRoot().addAction(Actions.fadeIn(0.6f));
     }
@@ -158,7 +157,7 @@ public class LeaderboardScreen extends ScreenAdapter {
         bottomBorder.setHeight(4);
 
         Table row = new Table();
-        row.setBackground(skin.newDrawable("blue-card"));  // main purple card
+        row.setBackground(skin.newDrawable("blue-card"));
 
         Label rankLabel = new Label(String.valueOf(rank), skin.get("white", Label.LabelStyle.class));
         rankLabel.setFontScale(1.3f);

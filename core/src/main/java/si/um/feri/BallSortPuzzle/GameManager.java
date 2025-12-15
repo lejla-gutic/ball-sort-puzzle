@@ -58,7 +58,6 @@ public class GameManager {
         saveScores();
     }
 
-
     public List<ScoreEntry> getScores() {
         return scores;
     }

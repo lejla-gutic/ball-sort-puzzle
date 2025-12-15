@@ -42,22 +42,19 @@ public class IntroScreen extends ScreenAdapter {
         float centerX = (Gdx.graphics.getWidth() - bearImage.getWidth()) / 2f;
         float pileY = Gdx.graphics.getHeight() * 0.15f;
 
-        // Bear starts hidden in ball pile
         bearImage.setPosition(centerX, pileY - bearImage.getHeight());
         bearImage.setOrigin(
             bearImage.getWidth() / 2f,
             bearImage.getHeight() / 2f
         );
-        bearImage.getColor().a = 0f; // invisible initially
+        bearImage.getColor().a = 0f;
 
-        // Logo starts above screen
         float logoStartX = (Gdx.graphics.getWidth() - logoImage.getWidth()) / 2f;
         float logoStartY = Gdx.graphics.getHeight();
 
         logoImage.setPosition(logoStartX, logoStartY);
         logoImage.getColor().a = 0f;
 
-        // Add actors
         stage.addActor(bearImage);
         stage.addActor(logoImage);
 
@@ -85,35 +82,28 @@ public class IntroScreen extends ScreenAdapter {
 
         bearImage.addAction(Actions.sequence(
 
-            // 1) Bear climbs invisibly into the ball pile
             Actions.moveTo(centerX, pileY + 20, 0.8f, Interpolation.sineOut),
 
-            // 2) Bear pops out (fade + rotate + jump)
             Actions.parallel(
                 Actions.fadeIn(0.3f),
                 Actions.moveBy(0, 40, 0.6f, Interpolation.sineOut),
                 Actions.rotateBy(15f, 0.4f)
             ),
 
-            // 3) Cute wobble
             Actions.rotateBy(-30f, 0.5f),
             Actions.rotateBy(15f, 0.4f),
 
-            // 4) Pause
             Actions.delay(1f),
 
-            // 5) Bear falls back into the ball pile
             Actions.parallel(
                 Actions.fadeOut(0.4f),
                 Actions.moveTo(centerX, pileY - bearImage.getHeight(), 0.7f, Interpolation.sineIn)
             ),
 
-            // 6) After bear disappears → logo slides from top
             Actions.run(() -> logoImage.addAction(
                 Actions.sequence(
                     Actions.delay(0.2f),
 
-                    // slide-in + fade
                     Actions.parallel(
                         Actions.fadeIn(0.8f),
                         Actions.moveTo(

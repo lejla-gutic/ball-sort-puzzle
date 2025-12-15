@@ -97,7 +97,6 @@ public class SettingsScreen extends ScreenAdapter {
 
         TextButton backBtn = new TextButton(" Back", skin);
         backBtn.getLabel().setFontScale(1.1f);
-
         Image backIcon = new Image(skin.getDrawable("image-left"));
 
         Table backRow = new Table();
@@ -130,6 +129,7 @@ public class SettingsScreen extends ScreenAdapter {
         CheckBox soundToggle = createSwitch("sound_on", true);
         CheckBox undoToggle  = createSwitch("undo_unlimited", true);
 
+
         Table settingsPanel = new Table();
         settingsPanel.setBackground(skin.getDrawable("panel-maroon"));
         settingsPanel.pad(25);
@@ -138,7 +138,6 @@ public class SettingsScreen extends ScreenAdapter {
         settingsPanel.add(createSettingRow("image-music-down", "Music", musicToggle)).row();
         settingsPanel.add(createSettingRow("image-sound-down", "Sound", soundToggle)).row();
         settingsPanel.add(createSettingRow("image-settings-down", "Unlimited Undo", undoToggle)).row();
-
         card.add(settingsPanel).growX().row();
 
 
@@ -207,23 +206,6 @@ public class SettingsScreen extends ScreenAdapter {
         if (selected.equals("Hard")) hard.getLabel().getColor().set(MAROON);
     }
 
-    private Table createSettingRow(String iconName, String text, CheckBox toggle) {
-        Table row = new Table();
-
-        Image icon = new Image(skin.getDrawable(iconName));
-        icon.setSize(28, 28);
-
-        Label label = new Label(text, skin);
-        label.setFontScale(1.1f);
-
-        row.add(icon).size(28).padRight(20);
-        row.add(label).expandX().left();
-        row.add(toggle).right();
-
-        return row;
-    }
-
-
     private CheckBox createSwitch(String key, boolean def) {
         CheckBox.CheckBoxStyle style = new CheckBox.CheckBoxStyle();
         style.checkboxOn = skin.getDrawable("switch");
@@ -243,6 +225,21 @@ public class SettingsScreen extends ScreenAdapter {
         return toggle;
     }
 
+    private Table createSettingRow(String iconName, String text, CheckBox toggle) {
+        Table row = new Table();
+
+        Image icon = new Image(skin.getDrawable(iconName));
+        icon.setSize(28, 28);
+
+        Label label = new Label(text, skin);
+        label.setFontScale(1.1f);
+
+        row.add(icon).size(28).padRight(20);
+        row.add(label).expandX().left();
+        row.add(toggle).right();
+
+        return row;
+    }
 
 
 }

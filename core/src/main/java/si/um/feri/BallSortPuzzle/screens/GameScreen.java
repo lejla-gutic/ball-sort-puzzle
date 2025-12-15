@@ -23,7 +23,6 @@ public class GameScreen extends ScreenAdapter {
 
        // new GameManager().resetScores();
 
-
         // za test
         /*GameManager gm = new GameManager();
         gm.addScore("Lejla", 5000);

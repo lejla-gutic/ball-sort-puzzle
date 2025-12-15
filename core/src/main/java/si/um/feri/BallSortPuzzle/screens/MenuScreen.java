@@ -98,6 +98,7 @@ public class MenuScreen extends ScreenAdapter {
         TextButton leaderboardBtn = new TextButton("LEADERBOARD", uiSkin, "menu-blue");
         TextButton settingsBtn = new TextButton("SETTINGS", uiSkin, "menu-blue");
         TextButton quitBtn = new TextButton("QUIT", uiSkin, "menu-blue");
+
         playBtn.getLabel().setFontScale(1.4f);
         leaderboardBtn.getLabel().setFontScale(1.4f);
         settingsBtn.getLabel().setFontScale(1.4f);
