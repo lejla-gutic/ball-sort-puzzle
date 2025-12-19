@@ -7,7 +7,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import si.um.feri.BallSortPuzzle.assets.AssetDescriptors;
+import si.um.feri.BallSortPuzzle.screens.GameScreen;
 import si.um.feri.BallSortPuzzle.screens.IntroScreen;
+import si.um.feri.BallSortPuzzle.screens.MenuScreen;
 
 public class BallSortPuzzle extends Game {
     private SpriteBatch batch;
@@ -31,7 +33,7 @@ public class BallSortPuzzle extends Game {
         assetManager.load(AssetDescriptors.ORANGE_SKIN);
 
         assetManager.finishLoading();
-        setScreen(new IntroScreen(this));
+        setScreen(new MenuScreen(this));
     }
 
     @Override

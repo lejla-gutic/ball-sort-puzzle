@@ -31,6 +31,7 @@ import si.um.feri.BallSortPuzzle.assets.AssetDescriptors;
 public class SettingsScreen extends ScreenAdapter {
 
     private final BallSortPuzzle game;
+    private final ScreenAdapter previousScreen;
 
     private Stage stage;
     private Viewport viewport;
@@ -44,8 +45,12 @@ public class SettingsScreen extends ScreenAdapter {
 
     private static final Color MAROON = new Color(0.55f, 0.1f, 0.25f, 1f);
 
-    public SettingsScreen(BallSortPuzzle game) {
+    public SettingsScreen(BallSortPuzzle game, ScreenAdapter previousScreen) {
         this.game = game;
+        this.previousScreen = previousScreen;
+    }
+    public SettingsScreen(BallSortPuzzle game) {
+        this(game, new MenuScreen(game));
     }
 
     @Override
@@ -67,6 +72,29 @@ public class SettingsScreen extends ScreenAdapter {
 
         Table root = buildUI();
         stage.addActor(root);
+
+        Table backTable = new Table();
+        backTable.setFillParent(true);
+        backTable.bottom().right().pad(30);
+
+        TextButton backBtn = new TextButton(" Back", skin);
+        backBtn.getLabel().setFontScale(1.1f);
+
+        Image backIcon = new Image(skin.getDrawable("image-left"));
+
+        Table backRow = new Table();
+        backRow.add(backIcon).size(24).padRight(8);
+        backRow.add(backBtn);
+
+        backBtn.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(previousScreen);
+            }
+        });
+
+        backTable.add(backRow);
+        stage.addActor(backTable);
 
         stage.getRoot().getColor().a = 0f;
         stage.getRoot().addAction(Actions.fadeIn(0.6f));
@@ -93,34 +121,17 @@ public class SettingsScreen extends ScreenAdapter {
 
         Table root = new Table();
         root.setFillParent(true);
-        root.top().padTop(70);
-
-        TextButton backBtn = new TextButton(" Back", skin);
-        backBtn.getLabel().setFontScale(1.1f);
-        Image backIcon = new Image(skin.getDrawable("image-left"));
-
-        Table backRow = new Table();
-        backRow.add(backIcon).size(24).padRight(8);
-        backRow.add(backBtn);
-
-        backBtn.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new MenuScreen(game));
-            }
-        });
-
-        root.add(backRow).left().padLeft(1);
-        root.row().padTop(30);
-
+        root.top().padTop(100);
 
         Table card = new Table();
-        card.setBackground(skin.getDrawable("panel-peach"));
+        card.setBackground(skin.getDrawable("panel-maroon"));
+        card.setColor(0.898f, 0.918f, 1f, 1f);
         card.pad(40);
         card.defaults().growX().pad(18);
 
         Label title = new Label("SETTINGS", skin);
         title.setFontScale(1.6f);
+        title.getStyle().fontColor = new Color(0.137f, 0.208f, 0.537f, 1f);
         title.setAlignment(Align.center);
         card.add(title).center().row();
 
@@ -132,6 +143,7 @@ public class SettingsScreen extends ScreenAdapter {
 
         Table settingsPanel = new Table();
         settingsPanel.setBackground(skin.getDrawable("panel-maroon"));
+        settingsPanel.setColor(0.898f, 0.918f, 1f, 1f);
         settingsPanel.pad(25);
         settingsPanel.defaults().growX().pad(12);
 
@@ -143,7 +155,7 @@ public class SettingsScreen extends ScreenAdapter {
 
         Label levelLabel = new Label("CHOOSE LEVEL", skin);
         levelLabel.setFontScale(1.2f);
-        levelLabel.setColor(MAROON);
+        levelLabel.getStyle().fontColor = new Color(0.137f, 0.208f, 0.537f, 1f);
         card.add(levelLabel).padTop(25).left().row();
 
         Table levelRow = new Table();
@@ -201,9 +213,9 @@ public class SettingsScreen extends ScreenAdapter {
         medium.getLabel().setColor(Color.WHITE);
         hard.getLabel().setColor(Color.WHITE);
 
-        if (selected.equals("Easy")) easy.getLabel().getColor().set(MAROON);
-        if (selected.equals("Medium")) medium.getLabel().getColor().set(MAROON);
-        if (selected.equals("Hard")) hard.getLabel().getColor().set(MAROON);
+        if (selected.equals("Easy")) easy.getLabel().getColor().set(0.137f, 0.208f, 0.537f, 1f);
+        if (selected.equals("Medium")) medium.getLabel().getColor().set(0.137f, 0.208f, 0.537f, 1f);
+        if (selected.equals("Hard")) hard.getLabel().getColor().set(0.137f, 0.208f, 0.537f, 1f);
     }
 
     private CheckBox createSwitch(String key, boolean def) {
@@ -214,6 +226,8 @@ public class SettingsScreen extends ScreenAdapter {
 
         CheckBox toggle = new CheckBox("", style);
         toggle.setChecked(prefs.getBoolean(key, def));
+
+        toggle.setColor(MAROON);
 
         toggle.addListener(new ChangeListener() {
             @Override

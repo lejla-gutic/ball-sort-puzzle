@@ -29,6 +29,10 @@ public class Tube {
         balls.push(ball);
     }
 
+    public void addBallForce(Ball ball) {
+        balls.push(ball);
+    }
+
     public void addBall(Ball ball) {
         if(!canAdd(ball)) {
             throw new IllegalStateException("Invalid move");

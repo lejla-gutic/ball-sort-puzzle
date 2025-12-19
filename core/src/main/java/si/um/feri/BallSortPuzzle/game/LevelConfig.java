@@ -14,11 +14,11 @@ public class LevelConfig {
     public static LevelConfig forLevel(LevelType level) {
         switch(level) {
             case EASY:
-                return new LevelConfig(4, 3, 4);
-            case MEDIUM:
                 return new LevelConfig(6, 4, 4);
-            case HARD:
+            case MEDIUM:
                 return new LevelConfig(8, 6, 4);
+            case HARD:
+                return new LevelConfig(10, 8, 4);
             default:
                 throw new IllegalArgumentException("Unknown level");
         }
