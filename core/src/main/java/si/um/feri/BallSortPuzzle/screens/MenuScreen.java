@@ -60,6 +60,8 @@ public class MenuScreen extends ScreenAdapter {
         boolean musicOn = prefs.getBoolean("music_on", true);
 
         if (musicOn) {
+            menuMusic.setLooping(true);
+            menuMusic.setVolume(0.25f);
             menuMusic.play();
         }
         else {

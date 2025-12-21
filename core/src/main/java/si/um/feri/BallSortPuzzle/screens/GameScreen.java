@@ -117,8 +117,17 @@ public class GameScreen extends ScreenAdapter {
             stage.addActor(tubesGroup);
 
             drawTubes();
-            createTopBar();
+            tubesGroup.getColor().a = 0f;
+            tubesGroup.setY(tubesGroup.getY() - 40);
 
+            tubesGroup.addAction(
+                Actions.parallel(
+                    Actions.fadeIn(0.4f),
+                    Actions.moveBy(0, 40, 0.4f)
+                )
+            );
+
+            createTopBar();
             initialized = true;
         }
         else {
@@ -128,8 +137,12 @@ public class GameScreen extends ScreenAdapter {
         }
 
         if (prefs.getBoolean("music_on", true)) {
+            gameMusic.setLooping(true);
+            gameMusic.setVolume(0.25f);
             gameMusic.play();
         }
+
+
     }
 
     @Override
@@ -212,8 +225,8 @@ public class GameScreen extends ScreenAdapter {
                 tubeGroup.addActor(ballImage);
             }
 
-            int row = i / tubesPerRow;   // 0 ili 1
-            int col = i % tubesPerRow;   // pozicija u redu
+            int row = i / tubesPerRow;
+            int col = i % tubesPerRow;
 
             float x = startX + col * (tubeWidth + spacing);
             float y = baseY - row * (tubeImage.getHeight() + rowSpacing);
@@ -221,7 +234,7 @@ public class GameScreen extends ScreenAdapter {
             tubeGroup.setPosition(x, y);
 
             if (index == selectedTube) {
-                tubeGroup.setColor(1f, 1f, 0.7f, 1f); // žućkasti highlight
+                tubeGroup.setColor(1f, 1f, 0.7f, 1f);
 
                 tubeGroup.addAction(
                     Actions.sequence(
@@ -262,7 +275,7 @@ public class GameScreen extends ScreenAdapter {
             selectedTube = index;
 
             if (prefs.getBoolean("sound_on", true)) {
-                popSound.play();
+                popSound.play(1.5f);
             }
 
             highlightTube(index);
@@ -345,7 +358,7 @@ public class GameScreen extends ScreenAdapter {
                     world.move(from, to, unlimitedUndo);
 
                     if (prefs.getBoolean("sound_on", true)) {
-                        pickSound.play();
+                        pickSound.play(1.5f);
                     }
 
                     animating = false;
@@ -632,6 +645,20 @@ public class GameScreen extends ScreenAdapter {
         });
 
         stage.addActor(topBar);
+
+        topBar.getColor().a = 0f;
+        topBar.setY(topBar.getY() + 30);
+
+        topBar.addAction(
+            Actions.sequence(
+                Actions.delay(0.1f),
+                Actions.parallel(
+                    Actions.fadeIn(0.3f),
+                    Actions.moveBy(0, -30, 0.3f)
+                )
+            )
+        );
+
 
     }
 

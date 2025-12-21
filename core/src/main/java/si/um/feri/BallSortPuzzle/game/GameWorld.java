@@ -22,7 +22,6 @@ public class GameWorld {
     private void initWorld(LevelConfig config) {
         List<Ball> balls = new ArrayList<>();
 
-        // 1️⃣ Kreiraj lopte
         for (int i = 0; i < config.colorCount; i++) {
             BallColor color = BallColor.values()[i];
             for (int j = 0; j < config.capacity; j++) {
@@ -32,12 +31,10 @@ public class GameWorld {
 
         Collections.shuffle(balls);
 
-        // 2️⃣ Kreiraj SVE tube-ove
         for (int i = 0; i < config.tubeCount; i++) {
             tubes.add(new Tube(config.capacity));
         }
 
-        // 3️⃣ Popuni SAMO prvih colorCount tube-ova
         int ballIndex = 0;
 
         for (int t = 0; t < config.colorCount; t++) {
@@ -65,12 +62,10 @@ public class GameWorld {
         dest.addBall(source.removeTop());
         moves++;
 
-        // 🔹 SPREMI POTEZ
         undoStack.push(new Move(from, to));
 
-        // 🔒 LIMIT UNDO AKO NIJE UNLIMITED
         if (!unlimitedUndo && undoStack.size() > MAX_UNDO) {
-            undoStack.remove(0); // izbaci najstariji potez
+            undoStack.remove(0);
         }
 
         return true;
@@ -81,8 +76,8 @@ public class GameWorld {
 
         Move last = undoStack.pop();
 
-        Tube source = tubes.get(last.to);   // gdje je lopta sada
-        Tube target = tubes.get(last.from); // gdje se vraća
+        Tube source = tubes.get(last.to);
+        Tube target = tubes.get(last.from);
 
         if (source.isEmpty()) return false;
 
