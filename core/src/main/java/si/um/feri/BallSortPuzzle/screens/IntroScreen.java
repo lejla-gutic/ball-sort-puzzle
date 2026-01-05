@@ -20,10 +20,14 @@ public class IntroScreen extends ScreenAdapter {
 
     private final BallSortPuzzle game;
     private Stage stage;
+    private Viewport viewport;
 
-    private TextureRegion background;
+    private Image backgroundImage;
     private Image bearImage;
     private Image logoImage;
+
+    private static final float WORLD_WIDTH = 950f;
+    private static final float WORLD_HEIGHT = 800f;
 
     public IntroScreen(BallSortPuzzle game) {
         this.game = game;
@@ -31,18 +35,23 @@ public class IntroScreen extends ScreenAdapter {
 
     @Override
     public void show() {
-        stage = new Stage();
+        viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT);
+        stage = new Stage(viewport, game.getBatch());
         Gdx.input.setInputProcessor(stage);
 
         AssetManager assetManager = game.getAssetManager();
         TextureAtlas atlas = assetManager.get(AssetDescriptors.UI_ATLAS);
 
-        background = atlas.findRegion("intro_background");
+        TextureRegion background = atlas.findRegion("intro_background");
+        backgroundImage = new Image(background);
+        backgroundImage.setFillParent(true);
+        stage.addActor(backgroundImage);
+
         bearImage = new Image(atlas.findRegion("bear"));
         logoImage = new Image(atlas.findRegion("logo"));
 
-        float centerX = (Gdx.graphics.getWidth() - bearImage.getWidth()) / 2f;
-        float pileY = Gdx.graphics.getHeight() * 0.15f;
+        float centerX = (WORLD_WIDTH - bearImage.getWidth()) / 2f;
+        float pileY = WORLD_HEIGHT * 0.15f;
 
         bearImage.setPosition(centerX, pileY - bearImage.getHeight());
         bearImage.setOrigin(
@@ -51,8 +60,8 @@ public class IntroScreen extends ScreenAdapter {
         );
         bearImage.getColor().a = 0f;
 
-        float logoStartX = (Gdx.graphics.getWidth() - logoImage.getWidth()) / 2f;
-        float logoStartY = Gdx.graphics.getHeight();
+        float logoStartX = (WORLD_WIDTH - logoImage.getWidth()) / 2f;
+        float logoStartY = WORLD_HEIGHT;
 
         logoImage.setPosition(logoStartX, logoStartY);
         logoImage.getColor().a = 0f;
@@ -67,17 +76,13 @@ public class IntroScreen extends ScreenAdapter {
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0, 1);
 
-        game.getBatch().begin();
-        game.getBatch().draw(
-            background,
-            0, 0,
-            Gdx.graphics.getWidth(),
-            Gdx.graphics.getHeight()
-        );
-        game.getBatch().end();
-
         stage.act(delta);
         stage.draw();
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        viewport.update(width, height, true);
     }
 
     private void startAnimation(float centerX, float pileY) {
@@ -109,8 +114,8 @@ public class IntroScreen extends ScreenAdapter {
                     Actions.parallel(
                         Actions.fadeIn(0.8f),
                         Actions.moveTo(
-                            (Gdx.graphics.getWidth() - logoImage.getWidth()) / 2f,
-                            Gdx.graphics.getHeight() * 0.4f,
+                            (WORLD_WIDTH - logoImage.getWidth()) / 2f,
+                            WORLD_HEIGHT * 0.4f,
                             1.0f,
                             Interpolation.sineOut
                         )

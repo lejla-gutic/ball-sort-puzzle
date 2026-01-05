@@ -13,5 +13,10 @@
 	"class": "si.um.feri.BallSortPuzzle.GameManager$ScoreEntry",
 	"name": "Nejra",
 	"score": 3400
+},
+{
+	"class": "si.um.feri.BallSortPuzzle.GameManager$ScoreEntry",
+	"name": "neja",
+	"score": 830
 }
 ]

@@ -28,6 +28,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 
 import si.um.feri.BallSortPuzzle.BallSortPuzzle;
@@ -47,13 +49,17 @@ import si.um.feri.BallSortPuzzle.game.Tube;
 
 public class GameScreen extends ScreenAdapter {
     private Stage stage;
+    private Viewport viewport;
     private TextureAtlas atlas;
     private Preferences prefs;
     private Skin skin;
 
-    private TextureRegion backgroundRegion;
+    private Image backgroundImage;
 
     private final BallSortPuzzle game;
+
+    private static final float WORLD_WIDTH = 950f;
+    private static final float WORLD_HEIGHT = 800f;
     private GameWorld world;
 
     private int selectedTube = -1;
@@ -82,7 +88,8 @@ public class GameScreen extends ScreenAdapter {
     @Override
     public void show() {
 
-        stage = new Stage();
+        viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT);
+        stage = new Stage(viewport, game.getBatch());
         Gdx.input.setInputProcessor(stage);
 
         prefs = Gdx.app.getPreferences("settings");
@@ -91,7 +98,10 @@ public class GameScreen extends ScreenAdapter {
         atlas = assetManager.get(AssetDescriptors.UI_ATLAS);
         skin = assetManager.get(AssetDescriptors.ORANGE_SKIN);
 
-        backgroundRegion = atlas.findRegion("main_background");
+        TextureRegion backgroundRegion = atlas.findRegion("main_background");
+        backgroundImage = new Image(backgroundRegion);
+        backgroundImage.setFillParent(true);
+        stage.addActor(backgroundImage);
 
         pickSound = assetManager.get(AssetDescriptors.PICK_SOUND);
         popSound  = assetManager.get(AssetDescriptors.POP_SOUND);
@@ -149,19 +159,12 @@ public class GameScreen extends ScreenAdapter {
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0, 1);
 
-        game.getBatch().begin();
-        game.getBatch().draw(
-            backgroundRegion,
-            0, 0,
-            Gdx.graphics.getWidth(),
-            Gdx.graphics.getHeight()
-        );
-        game.getBatch().end();
-
         stage.act(delta);
         stage.draw();
 
         if (levelCompleted) {
+            viewport.apply();
+            game.getBatch().setProjectionMatrix(viewport.getCamera().combined);
             game.getBatch().begin();
 
             confettiLeft.update(delta);
@@ -190,10 +193,10 @@ public class GameScreen extends ScreenAdapter {
         float tubeWidth = tempTube.getWidth();
 
         float rowSpacing = 50f;
-        float baseY = Gdx.graphics.getHeight() * 0.50f;
+        float baseY = WORLD_HEIGHT * 0.50f;
 
         float totalWidth = tubesPerRow * tubeWidth + (tubesPerRow - 1) * spacing;
-        float startX = (Gdx.graphics.getWidth() - totalWidth) / 2f;
+        float startX = (WORLD_WIDTH - totalWidth) / 2f;
 
         for (int i = 0; i < tubeCount; i++) {
             int index = i;
@@ -396,10 +399,10 @@ public class GameScreen extends ScreenAdapter {
     private void startConfetti() {
         levelCompleted = true;
 
-        float midY = Gdx.graphics.getHeight() / 2.5f;
+        float midY = WORLD_HEIGHT / 2.5f;
 
         confettiLeft.setPosition(40, midY);
-        confettiRight.setPosition(Gdx.graphics.getWidth() - 40, midY);
+        confettiRight.setPosition(WORLD_WIDTH - 40, midY);
 
         confettiLeft.start();
         confettiRight.start();
@@ -413,8 +416,8 @@ public class GameScreen extends ScreenAdapter {
         float popupWidth = 520;
         float popupHeight = 360;
 
-        float x = (Gdx.graphics.getWidth() - popupWidth) / 2f;
-        float y = (Gdx.graphics.getHeight() - popupHeight) / 2f;
+        float x = (WORLD_WIDTH - popupWidth) / 2f;
+        float y = (WORLD_HEIGHT - popupHeight) / 2f;
 
         Image bg = new Image(skin.getDrawable("panel-peach"));
         bg.setSize(popupWidth, popupHeight);
@@ -679,6 +682,11 @@ public class GameScreen extends ScreenAdapter {
     }
 
 
+
+    @Override
+    public void resize(int width, int height) {
+        viewport.update(width, height, true);
+    }
 
     @Override
     public void hide() {

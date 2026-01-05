@@ -31,9 +31,12 @@ public class MenuScreen extends ScreenAdapter {
 
     private Skin uiSkin;
     private TextureAtlas atlas;
-    private TextureRegion backgroundRegion;
+    private Image backgroundImage;
     private Music menuMusic;
     private Preferences prefs;
+
+    private static final float WORLD_WIDTH = 950f;
+    private static final float WORLD_HEIGHT = 800f;
 
 
     public MenuScreen(BallSortPuzzle game) {
@@ -42,7 +45,7 @@ public class MenuScreen extends ScreenAdapter {
 
     @Override
     public void show() {
-        viewport = new FitViewport(950, 800);
+        viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT);
         stage = new Stage(viewport, game.getBatch());
         Gdx.input.setInputProcessor(stage);
 
@@ -50,7 +53,10 @@ public class MenuScreen extends ScreenAdapter {
         uiSkin = assetManager.get(AssetDescriptors.ORANGE_SKIN);
         atlas = assetManager.get(AssetDescriptors.UI_ATLAS);
 
-        backgroundRegion = atlas.findRegion("menu_background");
+        TextureRegion backgroundRegion = atlas.findRegion("menu_background");
+        backgroundImage = new Image(backgroundRegion);
+        backgroundImage.setFillParent(true);
+        stage.addActor(backgroundImage);
 
         prefs = Gdx.app.getPreferences("settings");
 
@@ -78,17 +84,13 @@ public class MenuScreen extends ScreenAdapter {
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0, 1);
 
-        game.getBatch().begin();
-        game.getBatch().draw(
-            backgroundRegion,
-            0, 0,
-            Gdx.graphics.getWidth(),
-            Gdx.graphics.getHeight()
-        );
-        game.getBatch().end();
-
         stage.act(delta);
         stage.draw();
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        viewport.update(width, height, true);
     }
 
     private Table buildUI() {

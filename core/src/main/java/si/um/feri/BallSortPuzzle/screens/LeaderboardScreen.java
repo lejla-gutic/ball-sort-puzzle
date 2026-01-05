@@ -34,7 +34,10 @@ public class LeaderboardScreen extends ScreenAdapter {
     private Skin skin;
     private TextureAtlas atlas;
     private BitmapFont font;
-    private TextureRegion backgroundRegion;
+    private Image backgroundImage;
+
+    private static final float WORLD_WIDTH = 950f;
+    private static final float WORLD_HEIGHT = 800f;
 
     public LeaderboardScreen(BallSortPuzzle game) {
         this.game = game;
@@ -42,7 +45,7 @@ public class LeaderboardScreen extends ScreenAdapter {
 
     @Override
     public void show() {
-        viewport = new FitViewport(950, 800);
+        viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT);
         stage = new Stage(viewport, game.getBatch());
         Gdx.input.setInputProcessor(stage);
 
@@ -50,7 +53,11 @@ public class LeaderboardScreen extends ScreenAdapter {
         skin = am.get(AssetDescriptors.ORANGE_SKIN);
         atlas = am.get(AssetDescriptors.UI_ATLAS);
         font = am.get(AssetDescriptors.FONT);
-        backgroundRegion = atlas.findRegion("menu_background");
+
+        TextureRegion backgroundRegion = atlas.findRegion("menu_background");
+        backgroundImage = new Image(backgroundRegion);
+        backgroundImage.setFillParent(true);
+        stage.addActor(backgroundImage);
 
         stage.addActor(buildUI());
         Table backTable = new Table();
@@ -86,17 +93,13 @@ public class LeaderboardScreen extends ScreenAdapter {
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0, 1);
 
-        game.getBatch().begin();
-        game.getBatch().draw(
-            backgroundRegion,
-            0, 0,
-            Gdx.graphics.getWidth(),
-            Gdx.graphics.getHeight()
-        );
-        game.getBatch().end();
-
         stage.act(delta);
         stage.draw();
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        viewport.update(width, height, true);
     }
 
     private Table buildUI() {
